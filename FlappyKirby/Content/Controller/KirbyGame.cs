@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace FlappyKirby
+namespace FlappyKirby.Controller
 {
 	/// <summary>
 	/// This is the main type for your game.
@@ -70,7 +70,7 @@ namespace FlappyKirby
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+			graphics.GraphicsDevice.Clear(Color.DeepSkyBlue);
 
 			//TODO: Add your drawing code here
 
