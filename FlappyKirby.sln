@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlappyKirby", "FlappyKirby\FlappyKirby.csproj", "{D1579C93-7531-45B3-8141-AD613F265A2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1579C93-7531-45B3-8141-AD613F265A2E}.Debug|x86.ActiveCfg = Debug|x86
+		{D1579C93-7531-45B3-8141-AD613F265A2E}.Debug|x86.Build.0 = Debug|x86
+		{D1579C93-7531-45B3-8141-AD613F265A2E}.Release|x86.ActiveCfg = Release|x86
+		{D1579C93-7531-45B3-8141-AD613F265A2E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal

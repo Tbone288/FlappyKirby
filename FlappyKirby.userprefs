@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{D1579C93-7531-45B3-8141-AD613F265A2E}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FlappyKirby/Game1.cs">
+    <Files>
+      <File FileName="FlappyKirby/Game1.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.FlappyKirby PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>
