@@ -1,8 +1,9 @@
 ﻿<Properties StartupConfiguration="{D1579C93-7531-45B3-8141-AD613F265A2E}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="FlappyKirby/Content/Controller/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FlappyKirby/Content/Controller/KirbyGame.cs">
     <Files>
-      <File FileName="FlappyKirby/Content/Controller/KirbyGame.cs" Line="7" Column="18" />
-      <File FileName="FlappyKirby/Content/Controller/Program.cs" Line="1" Column="1" />
+      <File FileName="FlappyKirby/Content/Controller/KirbyGame.cs" Line="19" Column="36" />
+      <File FileName="FlappyKirby/Content/Controller/Program.cs" Line="16" Column="24" />
+      <File FileName="FlappyKirby/Content/Model/Player.cs" Line="21" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
