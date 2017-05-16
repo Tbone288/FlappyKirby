@@ -20,11 +20,11 @@ namespace FlappyKirby.Controller
 	static class Program
 #endif
 	{
-		private static Game1 game;
+		private static FlappyKirby game;
 
 		internal static void RunGame()
 		{
-			game = new Game1();
+			game = new FlappyKirby();
 			game.Run();
 #if !__IOS__ && !__TVOS__
 			game.Dispose();
@@ -82,3 +82,4 @@ namespace FlappyKirby.Controller
     }  
 #endif
 }
+

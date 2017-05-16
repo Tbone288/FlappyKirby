@@ -2,10 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+
 namespace FlappyKirby.Model
 {
-	class Player
+
+	public class Player
 	{
+
 		// Animation representing the player
 		private Texture2D playerTexture;
 		public Texture2D PlayerTexture
@@ -15,11 +18,11 @@ namespace FlappyKirby.Model
 		}
 
 		// Position of the Player relative to the upper left side of the screen
+		// As a struct it cannot be used as a property 😢 sad panda
 		public Vector2 Position;
 
 		// State of the player
-		private bool activeŒ
-
+		private bool active;
 		public bool Active
 		{
 			get { return active; }
@@ -45,32 +48,31 @@ namespace FlappyKirby.Model
 		{
 			get { return PlayerTexture.Height; }
 		}
-		// Initialize the player
+
+
 		public void Initialize(Texture2D texture, Vector2 position)
 		{
 			PlayerTexture = texture;
 
-			// Set the starting position of the player around the middle of the screen and to the back
+			// Set the starting position of the player around the middle of the screen and to the back 
 			Position = position;
 
-			// Set the player to be active
+			// Set the player to be active 
 			Active = true;
 
 			// Set the player health
 			Health = 100;
 		}
 
-		// Update the player animation
 		public void Update()
 		{
-			
 		}
 
-		// Draw the player
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(PlayerTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 		}
+
 
 	}
 }
