@@ -70,6 +70,11 @@ namespace FlappyKirby.Controller
 		// The music played during gameplay
 		private Song gameplayMusic;
 
+		//Number that holds the player score
+		private int score;
+		// The font used to display UI elements
+		private SpriteFont font;
+
 
 
 		public FlappyKirby()
@@ -119,9 +124,18 @@ namespace FlappyKirby.Controller
 
 				// Add the projectile, but add it to the front and center of the player
 				AddProjectile(player.Position + new Vector2(player.Width / 2, 0));
+				// Play the laser sound
+				laserSound.Play();
+
 			}
-			// Play the laser sound
-			laserSound.Play();
+
+			// reset score if player health goes to zero
+			if (player.Health <= 0)
+			{
+				player.Health = 100;
+				score = 0;
+			}
+
 		}
 
 		/// <summary>
@@ -162,6 +176,10 @@ namespace FlappyKirby.Controller
 
 			explosions = new List<Animation>();
 
+			//Set player's score to zero
+			score = 0;
+
+
 
 			base.Initialize();
 		}
@@ -183,10 +201,10 @@ namespace FlappyKirby.Controller
 			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
 			player.Initialize(playerAnimation, playerPosition);
 
-			// Load the music
+			 //Load the music
 			gameplayMusic = Content.Load<Song>("Sound/dedede's theme");
 
-			// Load the laser and explosion sound effect
+			 //Load the laser and explosion sound effect
 			laserSound = Content.Load<SoundEffect>("Sound/laserFire");
 			explosionSound = Content.Load<SoundEffect>("Sound/explosion");
 
@@ -204,6 +222,9 @@ namespace FlappyKirby.Controller
 			projectileTexture = Content.Load<Texture2D>("Texture/laser");
 
 			explosionTexture = Content.Load<Texture2D>("Animation/explosion");
+
+			// Load the score font
+			font = Content.Load<SpriteFont>("Font/gameFont");
 
 
 			//TODO: use this.Content to load your game content here 
@@ -292,6 +313,11 @@ namespace FlappyKirby.Controller
 				explosions[i].Draw(spriteBatch);
 			}
 
+			// Draw the score
+			spriteBatch.DrawString(font, "score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.Black);
+			// Draw the player health
+			spriteBatch.DrawString(font, "health: " + player.Health, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y + 30), Color.Black);
+
 			// Update the explosions
 			UpdateExplosions(gameTime);
 
@@ -344,12 +370,18 @@ namespace FlappyKirby.Controller
 					{
 						// Add an explosion
 						AddExplosion(enemies[i].Position);
+						// Play the explosion sound
+						explosionSound.Play();
+						//Add to the player's score
+						score += enemies[i].ScoreValue;
 					}
 					enemies.RemoveAt(i);
+
 				}
 			}
-			// Play the explosion sound
-			explosionSound.Play();
+
+
+
 		}
 
 		private void UpdateCollision()
@@ -390,20 +422,20 @@ namespace FlappyKirby.Controller
 			{
 				for (int j = 0; j < enemies.Count; j++)
 				{
-        // Create the rectangles we need to determine if we collided with each other
-        rectangle1 = new Rectangle((int)projectiles[i].position.X - projectiles[i].Width / 2, (int) projectiles[i].position.Y - 
- projectiles[i].Height / 2, projectiles[i].Width, projectiles[i].Height);
+					// Create the rectangles we need to determine if we collided with each other
+					rectangle1 = new Rectangle((int)projectiles[i].position.X - projectiles[i].Width / 2, (int)projectiles[i].position.Y -
+			 projectiles[i].Height / 2, projectiles[i].Width, projectiles[i].Height);
 
-        rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2, (int) enemies[j].Position.Y - enemies[j].Height / 2, enemies[j].Width, enemies[j].Height);
+					rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2, (int)enemies[j].Position.Y - enemies[j].Height / 2, enemies[j].Width, enemies[j].Height);
 
-        // Determine if the two objects collided with each other
-        if (rectangle1.Intersects(rectangle2))
-        {
-            enemies[j].Health -= projectiles[i].Damage;
-            projectiles[i].Active = false;
-        }
-    }
-}
+					// Determine if the two objects collided with each other
+					if (rectangle1.Intersects(rectangle2))
+					{
+						enemies[j].Health -= projectiles[i].Damage;
+						projectiles[i].Active = false;
+					}
+				}
+			}
 		}
 
 		private void AddProjectile(Vector2 position)
