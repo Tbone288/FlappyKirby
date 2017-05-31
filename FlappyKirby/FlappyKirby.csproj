@@ -45,6 +45,8 @@
     <Compile Include="Guts\View\ParallaxingBackground.cs" />
     <Compile Include="Guts\Model\Enemy.cs" />
     <Compile Include="Guts\Model\Projectile.cs" />
+    <Compile Include="Guts\Model\Star.cs" />
+    <Compile Include="Guts\Model\Flamethrower.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

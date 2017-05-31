@@ -54,6 +54,12 @@ namespace FlappyKirby.Controller
 		private Texture2D projectileTexture;
 		private List<Projectile> projectiles;
 
+		private Texture2D starTexture;
+		private List<Star> stars;
+
+		private Texture2D flamethrowerTexture;
+		private List<Flamethrower> flamethrowers;
+
 		// The rate of fire of the player laser
 		private TimeSpan fireTime;
 		private TimeSpan previousFireTime;
@@ -126,7 +132,28 @@ namespace FlappyKirby.Controller
 				AddProjectile(player.Position + new Vector2(player.Width / 2, 0));
 				// Play the laser sound
 				laserSound.Play();
+			}
 
+			if (currentKeyboardState.IsKeyDown(Keys.Q))
+			{
+				// Reset our current time
+				previousFireTime = gameTime.TotalGameTime;
+
+				// Add the projectile, but add it to the front and center of the player
+				AddStar(player.Position + new Vector2(player.Width / 2, 0));
+				// Play the laser sound
+				laserSound.Play();
+			}
+
+            if(currentKeyboardState.IsKeyDown(Keys.A))
+			{
+				// Reset our current time
+				previousFireTime = gameTime.TotalGameTime;
+
+				// Add the projectile, but add it to the front and center of the player
+				AddFlamethrower(player.Position + new Vector2(player.Width / 2, 0));
+				// Play the laser sound
+				laserSound.Play();
 			}
 
 			// reset score if player health goes to zero
@@ -170,6 +197,10 @@ namespace FlappyKirby.Controller
 			random = new Random();
 
 			projectiles = new List<Projectile>();
+
+			stars = new List<Star>();
+
+			flamethrowers = new List<Flamethrower>();
 
 			// Set the laser to fire every quarter second
 			fireTime = TimeSpan.FromSeconds(.15f);
@@ -221,6 +252,10 @@ namespace FlappyKirby.Controller
 
 			projectileTexture = Content.Load<Texture2D>("Texture/laser");
 
+			starTexture = Content.Load<Texture2D>("Texture/star");
+
+			flamethrowerTexture = Content.Load<Texture2D>("Texture/flamethrower");
+
 			explosionTexture = Content.Load<Texture2D>("Animation/explosion");
 
 			// Load the score font
@@ -267,6 +302,8 @@ namespace FlappyKirby.Controller
 
 			// Update the projectiles
 			UpdateProjectiles();
+			UpdateStars();
+			UpdateFlamethrowers();
 
 			// TODO: Add your update logic here
 
@@ -305,6 +342,16 @@ namespace FlappyKirby.Controller
 			for (int i = 0; i < projectiles.Count; i++)
 			{
 				projectiles[i].Draw(spriteBatch);
+			}
+
+			for (int i = 0; i<stars.Count; i++)
+			{
+				stars[i].Draw(spriteBatch);
+			}
+
+			for (int i = 0; i<flamethrowers.Count; i++)
+			{
+				flamethrowers[i].Draw(spriteBatch);
 			}
 
 			// Draw the explosions
@@ -436,6 +483,44 @@ namespace FlappyKirby.Controller
 					}
 				}
 			}
+
+			for (int i = 0; i < stars.Count; i++)
+			{
+				for (int j = 0; j < enemies.Count; j++)
+				{
+					// Create the rectangles we need to determine if we collided with each other
+					rectangle1 = new Rectangle((int)stars[i].position.X - stars[i].Width / 2, (int)stars[i].position.Y -
+				stars[i].Height / 2, stars[i].Width, stars[i].Height);
+
+					rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2, (int)enemies[j].Position.Y - enemies[j].Height / 2, enemies[j].Width, enemies[j].Height);
+
+					// Determine if the two objects collided with each other
+					if (rectangle1.Intersects(rectangle2))
+					{
+						enemies[j].Health -= stars[i].Damage;
+						stars[i].Active = false;
+					}
+				}
+			}
+
+			for (int i = 0; i<flamethrowers.Count; i++)
+			{
+				for (int j = 0; j<enemies.Count; j++)
+				{
+					// Create the rectangles we need to determine if we collided with each other
+					rectangle1 = new Rectangle((int)flamethrowers[i].position.X - flamethrowers[i].Width / 2, (int)flamethrowers[i].position.Y -
+					                           flamethrowers[i].Height / 2, flamethrowers[i].Width, flamethrowers[i].Height);
+
+					rectangle2 = new Rectangle((int)enemies[j].Position.X - enemies[j].Width / 2, (int)enemies[j].Position.Y - enemies[j].Height / 2, enemies[j].Width, enemies[j].Height);
+
+					// Determine if the two objects collided with each other
+					if (rectangle1.Intersects(rectangle2))
+					{
+						enemies[j].Health -= flamethrowers[i].Damage;
+						flamethrowers[i].Active = false;
+					}
+				}
+			}
 		}
 
 		private void AddProjectile(Vector2 position)
@@ -443,6 +528,20 @@ namespace FlappyKirby.Controller
 			Projectile projectile = new Projectile();
 			projectile.Initialize(GraphicsDevice.Viewport, projectileTexture, position);
 			projectiles.Add(projectile);
+		}
+
+		private void AddStar(Vector2 position)
+		{
+			Star star = new Star();
+			star.Initialize(GraphicsDevice.Viewport, starTexture, position);
+			stars.Add(star);
+		}
+
+		private void AddFlamethrower(Vector2 position)
+		{
+			Flamethrower flamethrower = new Flamethrower();
+			flamethrower.Initialize(GraphicsDevice.Viewport, flamethrowerTexture, position);
+			flamethrowers.Add(flamethrower);
 		}
 
 		private void UpdateProjectiles()
@@ -455,6 +554,34 @@ namespace FlappyKirby.Controller
 				if (projectiles[i].Active == false)
 				{
 					projectiles.RemoveAt(i);
+				}
+			}
+		}
+
+		private void UpdateStars()
+		{
+			// Update the Projectiles
+			for (int i = stars.Count - 1; i >= 0; i--)
+			{
+				stars[i].Update();
+
+				if (stars[i].Active == false)
+				{
+					stars.RemoveAt(i);
+				}
+			}
+		}
+
+		private void UpdateFlamethrowers()
+		{
+			// Update the Projectiles
+			for (int i = flamethrowers.Count - 1; i >= 0; i--)
+			{
+				flamethrowers[i].Update();
+
+				if (flamethrowers[i].Active == false)
+				{
+					flamethrowers.RemoveAt(i);
 				}
 			}
 		}
